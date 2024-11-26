@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export const Item = ({item}) => {
+export const ItemDetail = ({item,onBack}) => {
 
 
 
@@ -12,6 +12,8 @@ export const Item = ({item}) => {
       <p>{item.description}</p>
       <p>Price: ${item.price}</p>
       <p>Category: {item.category}</p>
+      <button onClick={onBack}>Back</button>
+
     </div>
   </>
 } 
