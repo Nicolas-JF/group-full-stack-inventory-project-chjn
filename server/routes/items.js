@@ -1,25 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const { Item } = require('../models');
+const { Item } = require('../models/item');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const items = await Item.findAll();
-    res.json(items);
+    res.send(items);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch items' });
+    next(error);
   }
 });
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
       const item = await Item.findByPk(req.params.id);
       if (item) {
-        res.json(item);
+        res.send(item);
       } else {
-        res.status(404).json({ error: 'Item not found' });
+        res.status(404).send('Item not found');
       }
     } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch item' });
+      next(error);
     }
   });
 module.exports = router;

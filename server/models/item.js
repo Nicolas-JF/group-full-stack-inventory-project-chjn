@@ -10,4 +10,7 @@ const Item = sequelize.define('item', {
 
 });
 
-module.exports = Item;
+module.exports = {
+    db: sequelize,
+    Item
+}
