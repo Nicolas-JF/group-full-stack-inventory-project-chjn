@@ -1,0 +1,14 @@
+.item-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: space-evenly;
+  }
+
+  h1{
+    text-align: center;
+  }
+  h2{
+    text-align: center;
+  }
