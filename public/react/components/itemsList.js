@@ -3,7 +3,6 @@ import { Item } from './itemDetail';
 
 export const ItemsList = ({items}) => {
 
-	const [items, setItems] = useState([]);
 
   
 	return <>
