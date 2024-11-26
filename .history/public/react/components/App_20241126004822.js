@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ItemsList } from './itemsList';
+import { ItemsList } from './ItemsList';
 
 // import and prepend the api url to any fetch calls
 import apiURL from '../api';
@@ -27,7 +27,7 @@ export const App = () => {
 		<main>	
       <h1>Sauce Store</h1>
 			<h2>All things 🔥</h2>
-			<ItemsList item={item} />
+			<ItemList item={item} />
 		</main>
 	)
 }

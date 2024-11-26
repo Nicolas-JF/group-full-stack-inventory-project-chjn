@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ItemsList } from './itemsList';
+import { ItemsList } from './ItemsList';
 
 // import and prepend the api url to any fetch calls
 import apiURL from '../api';
