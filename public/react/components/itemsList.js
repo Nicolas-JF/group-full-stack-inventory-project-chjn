@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './itemsList.css';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 export const ItemsList = ({item,  onItemClick}) => {
 
 	return (
@@ -13,7 +14,7 @@ export const ItemsList = ({item,  onItemClick}) => {
             <div className='item-info-unit'> {item.name} </div>
             <div className='item-info-unit'> Price: ${item.price} </div>
           </div>
-          <Button className='item-details-button' variant='info' onClick={()=>onItemClick(item.id)} > Details </Button>
+          <Button className='item-details-button' variant='info' onClick={()=>onItemClick(item.id)}> <i class="bi bi-info-circle"></i> Info </Button>
         </div>
       </div>
     </>
