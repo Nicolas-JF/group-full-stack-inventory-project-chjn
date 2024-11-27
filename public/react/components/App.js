@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ItemsList } from './itemsList';
 import { ItemDetail } from './itemDetail';	
 import { NavBar } from './Navbar';
+import { FormModal } from './formModal';
 import './app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import and prepend the api url to any fetch calls
@@ -9,9 +10,19 @@ import apiURL from '../api';
 
 export const App = () => {
 
+    // States
     const [items, setItems] = useState([]);
-	const [selectedItem, setSelectedItem] = useState(null);
+	const [selectedItem, setSelectedItem] = useState({
+        name: '',
+        image: '',
+        price: 0,
+        category: '',
+        description: ''
+    });
 	const [selectedItemId, setSelectedItemId] = useState(null);
+    const [showAll, setShowAll] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const [isAdding, setIsAdding] = useState(false);
 
     async function fetchItems(){
         try {
@@ -39,23 +50,31 @@ export const App = () => {
     }, []);
 	const handleItemClick = (itemId) => {
 		setSelectedItemId(itemId);
+        setShowAll(false);
 		fetchItem(itemId);
 	  };
 	
 	  const handleBack = () => {
-		setSelectedItem(null);
+		setSelectedItem({
+            name: '',
+            image: '',
+            price: 0,
+            category: '',
+            description: ''
+        });
+        setShowAll(true);
 	  };
     return (
         <main>	
-            <NavBar handleBack={handleBack}/>
+            <NavBar handleBack={handleBack} setShowModal={setShowModal} setIsAdding={setIsAdding}/>
             <h1><b> CHJL Inventory Management</b></h1>
             <h2>Full inventory list of items for sale</h2>
             <br/>
             <br/>
-            {selectedItem && (
-                    <ItemDetail item={selectedItem} onBack={handleBack} />
+            {!showAll && (
+                    <ItemDetail item={selectedItem} onBack={handleBack} setShowModal={setShowModal}/>
             )}
-            {!selectedItem && (
+            {showAll && (
                 <>
                 <h1> Inventory List </h1>
                 <br/>
@@ -68,6 +87,7 @@ export const App = () => {
                 </div>
                 </>
             )}
+            <FormModal showModal={showModal} setShowModal={setShowModal} selectedItem={selectedItem} isAdding={isAdding} setIsAdding={setIsAdding}/>
         </main>
     );
 }
