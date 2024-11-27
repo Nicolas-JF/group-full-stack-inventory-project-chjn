@@ -70,13 +70,14 @@ export const App = () => {
             <br/>
             <br/>
             <br/>
-            <h1 style={{color:'blue'}}><b> CHJL Inventory Management</b></h1>
+            <br/>
+            <br/>
             {!showAll && (
                     <ItemDetail item={selectedItem} onBack={handleBack} setShowModal={setShowModal}/>
             )}
             {showAll && (
                 <>
-                <h1 style={{color: 'green'}}> Inventory List </h1>
+                <h1 style={{color: 'blue'}}> Inventory List </h1>
                 <br/>
                 <br/>
                 <br/>
