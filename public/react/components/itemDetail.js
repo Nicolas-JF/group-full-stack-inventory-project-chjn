@@ -14,6 +14,7 @@ export const ItemDetail = ({item,onBack, setShowModal}) => {
       <div className='body'>
         <div className='item'>
         <Button onClick={onBack} variant='secondary' className='back-button'> <i className="bi bi-arrow-left"></i> Back </Button>
+          <h3> {item.name} </h3>
           <div className='image-wrap'> <img src={item.image} alt={item.name} className='image'/></div>
           <div className='content'>
             <div className='description'> Description: {item.description} </div>

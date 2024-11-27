@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setIsAdding}) =>{
@@ -36,24 +37,28 @@ export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setI
                     <Modal.Title> {isAdding ? 'Add new item' : 'Edit Item'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form className='form-modal'>
-                        <div className='form-element'>
-                            <label htmlFor='img'> Upload Image </label>
-                            <input type='file' name='img' accept='image/*' value=''/>
-                        </div>
-                        <div className='form-element'>
-                            <label htmlFor='price'> Item Price </label>
-                            <input type='number' name='price' value={formElements.price}/>
-                        </div>
-                        <div className='form-element'>
-                            <label htmlFor='category'> Item Category </label>
-                            <input type='text' name='category' value={formElements.category}/>    
-                        </div>
-                        <div className='form-element'>
-                            <label htmlFor='description'> Item Description </label>
-                            <textarea name='description' value={formElements.description}> </textarea>
-                        </div>
-                    </form>                                       
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formImage">
+                            <Form.Label> Image </Form.Label>
+                            <Form.Control type='file'/>
+                            <Form.Text> Upload an Image </Form.Text>
+                        </Form.Group>
+                        <Form.Group className='mb-3' controlId='formPrice'>
+                            <Form.Label> Price </Form.Label>
+                            <Form.Control type='number' value={formElements.price}/>
+                            <Form.Text> Price per unit of item </Form.Text>
+                        </Form.Group>
+                        <Form.Group className='mb-3' controlId='formCategory'>
+                            <Form.Label> Category </Form.Label>
+                            <Form.Control type='text' value={formElements.category}/>
+                            <Form.Text> Category of item </Form.Text>
+                        </Form.Group>
+                        <Form.Group className='mb-3' controlId='formDescription'>
+                            <Form.Label> Description </Form.Label>
+                            <Form.Control as='textarea' value={formElements.description}/>
+                            <Form.Text> Item Description </Form.Text>
+                        </Form.Group>
+                    </Form>                                    
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={handleClose}> <i className="bi bi-x"></i>Close </Button>

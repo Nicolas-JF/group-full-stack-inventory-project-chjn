@@ -67,16 +67,16 @@ export const App = () => {
     return (
         <main>	
             <NavBar handleBack={handleBack} setShowModal={setShowModal} setIsAdding={setIsAdding} showAll={showAll}/>
-            <h1><b> CHJL Inventory Management</b></h1>
-            <h2>Full inventory list of items for sale</h2>
             <br/>
             <br/>
+            <br/>
+            <h1 style={{color:'blue'}}><b> CHJL Inventory Management</b></h1>
             {!showAll && (
                     <ItemDetail item={selectedItem} onBack={handleBack} setShowModal={setShowModal}/>
             )}
             {showAll && (
                 <>
-                <h1> Inventory List </h1>
+                <h1 style={{color: 'green'}}> Inventory List </h1>
                 <br/>
                 <br/>
                 <br/>
