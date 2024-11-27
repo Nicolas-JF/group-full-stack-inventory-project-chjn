@@ -1,0 +1,9 @@
+.form-modal{
+    display: flex;
+    flex-direction: column;
+}
+.form-element{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

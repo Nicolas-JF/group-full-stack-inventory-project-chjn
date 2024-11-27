@@ -14,7 +14,7 @@ export const ItemsList = ({item,  onItemClick}) => {
             <div className='item-info-unit'> {item.name} </div>
             <div className='item-info-unit'> Price: ${item.price} </div>
           </div>
-          <Button className='item-details-button' variant='info' onClick={()=>onItemClick(item.id)}> <i class="bi bi-info-circle"></i> Info </Button>
+          <Button className='item-details-button' variant='info' onClick={()=>onItemClick(item.id)}> <i className="bi bi-info-circle"></i> Info </Button>
         </div>
       </div>
     </>
