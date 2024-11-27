@@ -40,22 +40,22 @@ export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setI
                     <Form>
                         <Form.Group className="mb-3" controlId="formImage">
                             <Form.Label> Image </Form.Label>
-                            <Form.Control type='file'/>
+                            <Form.Control type='file' onChange={(e)=>setFormElements({...formElements, image: e.target.value})}/>
                             <Form.Text> Upload an Image </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formPrice'>
                             <Form.Label> Price </Form.Label>
-                            <Form.Control type='number' value={formElements.price}/>
+                            <Form.Control type='number' value={formElements.price} onChange={(e)=>setFormElements({...formElements, price : e.target.value})}/>
                             <Form.Text> Price per unit of item </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formCategory'>
                             <Form.Label> Category </Form.Label>
-                            <Form.Control type='text' value={formElements.category}/>
+                            <Form.Control type='text' value={formElements.category} onChange={(e)=>setFormElements({...formElements, category: e.target.value})}/>
                             <Form.Text> Category of item </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formDescription'>
                             <Form.Label> Description </Form.Label>
-                            <Form.Control as='textarea' value={formElements.description}/>
+                            <Form.Control as='textarea' value={formElements.description} onChange={(e)=>setFormElements({...formElements, description: e.target.value})}/>
                             <Form.Text> Item Description </Form.Text>
                         </Form.Group>
                     </Form>                                    
