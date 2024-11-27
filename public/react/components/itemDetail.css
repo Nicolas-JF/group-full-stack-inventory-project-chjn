@@ -1,0 +1,75 @@
+.body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.item{
+    display:flex;
+    flex-direction: column;
+    height: 40%;
+    width: 40%;
+    border-radius: 2px;
+    justify-content: space-between;
+    margin: 10px;
+
+    padding-top: 5px;
+}
+.image-wrap{
+    align-items: center;
+    border-radius: rem(6px);
+    border-width: 1px;
+    flex-direction: row;
+    display: flex;
+    height: rem(220px);
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+.image{
+    border-radius: rem(6px);
+    height: 200px;
+    width: 200px;
+}
+.content{
+    display:flex;
+    flex-direction: column;
+}
+
+.description{
+    border:1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+.price{
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px;
+}
+.category{
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+
+
+.actions{
+    display:flex;
+    flex-direction: row;
+    gap: 5%;
+}
+.edit-button{
+    width: 20%;
+}
+.delete-button{
+    width: 20%;
+}
+.back-button{
+    width: 20%;
+}
