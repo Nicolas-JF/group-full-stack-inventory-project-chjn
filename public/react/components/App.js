@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ItemsList } from './itemsList';
 import { ItemDetail } from './itemDetail';	
+import { NavBar } from './Navbar';
 import './app.css';
-import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import and prepend the api url to any fetch calls
 import apiURL from '../api';
@@ -47,14 +47,7 @@ export const App = () => {
 	  };
     return (
         <main>	
-            <Navbar className='bg-body-tertiary' variant='light'>
-                <Container>
-                    <Navbar.Brand onClick={handleBack} href='#'> CJHL </Navbar.Brand>
-                    <Nav>
-                        <Button> Add new item </Button>
-                    </Nav>
-                </Container>
-            </Navbar>
+            <NavBar handleBack={handleBack}/>
             <h1><b> CHJL Inventory Management</b></h1>
             <h2>Full inventory list of items for sale</h2>
             <br/>
