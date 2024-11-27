@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Item } from './itemDetail';
 import './itemsList.css';
 import { Button } from 'react-bootstrap';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 export const ItemsList = ({item,  onItemClick}) => {
-  
+
 	return (
     <>
       <div className='item-container'>

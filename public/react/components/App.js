@@ -47,9 +47,9 @@ export const App = () => {
 	  };
     return (
         <main>	
-            <Navbar className='bg-body-tertiary'>
+            <Navbar className='bg-body-tertiary' variant='light'>
                 <Container>
-                    <Navbar.Brand href='#'> CJHL </Navbar.Brand>
+                    <Navbar.Brand onClick={handleBack} href='#'> CJHL </Navbar.Brand>
                     <Nav>
                         <Button> Add new item </Button>
                     </Nav>
@@ -60,7 +60,7 @@ export const App = () => {
             <br/>
             <br/>
             {selectedItem && (
-                <ItemDetail item={selectedItem} onBack={handleBack} />
+                    <ItemDetail item={selectedItem} onBack={handleBack} />
             )}
             {!selectedItem && (
                 <>
