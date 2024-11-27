@@ -1,7 +1,7 @@
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-export const NavBar = ({handleBack, setShowModal, setIsAdding}) =>{
+export const NavBar = ({handleBack, setShowModal,setIsAdding, showAll}) =>{
     const handleAdd = () =>{
         setShowModal(true);
         setIsAdding(true);
@@ -11,7 +11,9 @@ export const NavBar = ({handleBack, setShowModal, setIsAdding}) =>{
             <Container>
                 <Navbar.Brand onClick={handleBack} href='#'> CJHL </Navbar.Brand>
                 <Nav>
-                    <Button onClick={handleAdd}> <i className="bi bi-plus-circle"></i> Add new item </Button>
+                    {showAll && (
+                        <Button onClick={handleAdd}> <i className="bi bi-plus-circle"></i> Add new item </Button>
+                    )}   
                 </Nav>
             </Container>
         </Navbar>
