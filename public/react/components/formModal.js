@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import './formModal.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setIsAdding}) =>{
@@ -38,9 +39,12 @@ export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setI
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
+                        <Form.Group className='mb-3 display'>
+                            <img src={formElements.image} className='display-image' alt='No Image Found'/>
+                        </Form.Group>
                         <Form.Group className="mb-3" controlId="formImage">
                             <Form.Label> Image </Form.Label>
-                            <Form.Control type='file' onChange={(e)=>setFormElements({...formElements, image: e.target.value})}/>
+                            <Form.Control type='file' onChange={(e)=>setFormElements({...formElements, image: URL.createObjectURL(e.target.files[0])})}/>
                             <Form.Text> Upload an Image </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formPrice'>
