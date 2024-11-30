@@ -41,7 +41,7 @@ router.get('/:id', async (req, res, next) => {
 
 // PUT method
 router.put('/:id', async(req, res)=>{
-  const result = await Item.update(req,body, {
+  const result = await Item.update(req.body, {
     where: {
       id: req.params.id
     }

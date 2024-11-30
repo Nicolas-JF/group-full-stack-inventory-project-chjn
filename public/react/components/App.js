@@ -82,13 +82,13 @@ export const App = () => {
                 <br/>
                 <br/>
                 <div className='item-list'>
-                    {items.map((item)=>(
-                        <ItemsList item={item} onItemClick={handleItemClick}/>
+                    {items.map((item, index)=>(
+                        <ItemsList key={index} item={item} onItemClick={handleItemClick}/>
                     ))}
                 </div>
                 </>
             )}
-            <FormModal showModal={showModal} setShowModal={setShowModal} selectedItem={selectedItem} isAdding={isAdding} setIsAdding={setIsAdding}/>
+            <FormModal showModal={showModal} setShowModal={setShowModal} selectedItem={selectedItem} isAdding={isAdding} setIsAdding={setIsAdding} fetchItem={fetchItem} fetchItems={fetchItems}/>
         </main>
     );
 }

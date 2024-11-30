@@ -9,6 +9,10 @@ export const ItemDetail = ({item,onBack, setShowModal}) => {
     setShowModal(true);
   }
 
+  const handleDelete = () =>{
+    
+  }
+
   return (
     <>
       <div className='body'>
