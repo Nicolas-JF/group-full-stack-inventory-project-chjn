@@ -5,9 +5,11 @@ import Form from 'react-bootstrap/Form';
 import './formModal.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { InputGroup } from 'react-bootstrap';
 export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setIsAdding}) =>{
 
     const [formElements, setFormElements] = useState({
+            id: 0,
             name: '',
             image: '',
             price: 0,
@@ -18,6 +20,7 @@ export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setI
     useEffect(()=>{
         if(showModal){
             setFormElements({
+                id: selectedItem.id,
                 name: selectedItem.name,
                 image: selectedItem.image,
                 price: selectedItem.price,
@@ -54,7 +57,10 @@ export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setI
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formPrice'>
                             <Form.Label> Price </Form.Label>
-                            <Form.Control type='number' value={formElements.price} onChange={(e)=>setFormElements({...formElements, price : e.target.value})}/>
+                            <InputGroup className='mb-3'>
+                            <InputGroup.Text>$</InputGroup.Text>
+                                <Form.Control type='number' value={formElements.price} onChange={(e)=>setFormElements({...formElements, price : e.target.value})}/>
+                            </InputGroup>
                             <Form.Text> Price per unit of item </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formCategory'>

@@ -13,6 +13,7 @@ export const App = () => {
     // States
     const [items, setItems] = useState([]);
 	const [selectedItem, setSelectedItem] = useState({
+        id: 0,
         name: '',
         image: '',
         price: 0,
@@ -29,7 +30,6 @@ export const App = () => {
             const response = await fetch(`${apiURL}/items`);
             const itemsData = await response.json();
             setItems(itemsData);
-			console.log(items)
         } catch (err) {
             console.log("Oh no an error! ", err)
         }
