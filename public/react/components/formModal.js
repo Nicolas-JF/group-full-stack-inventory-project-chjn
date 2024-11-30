@@ -47,6 +47,11 @@ export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setI
                             <Form.Control type='file' onChange={(e)=>setFormElements({...formElements, image: URL.createObjectURL(e.target.files[0])})}/>
                             <Form.Text> Upload an Image </Form.Text>
                         </Form.Group>
+                        <Form.Group className='mb-3' controlId='formName'>
+                            <Form.Label> Name </Form.Label>
+                            <Form.Control type='text' value={formElements.name} onChange={(e)=>setFormElements({...formElements, name})}/>
+                            <Form.Text> Name of item </Form.Text>
+                        </Form.Group>
                         <Form.Group className='mb-3' controlId='formPrice'>
                             <Form.Label> Price </Form.Label>
                             <Form.Control type='number' value={formElements.price} onChange={(e)=>setFormElements({...formElements, price : e.target.value})}/>

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Item } = require('../models/item');
+const { check, validationResult } = require('express-validator');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -21,5 +22,20 @@ router.get('/:id', async (req, res, next) => {
     } catch (error) {
       next(error);
     }
+  });
+  // POST request to add a new item
+  router.post('/', 
+    [
+      check['name'].not().isEmpty().trim()
+    ],
+    async (req, res)=> {
+      const errors = validationResult(req);
+      if(!errors.isEmpty()){
+        res.json({error: errors.array()});
+      }
+      else{
+        const result = await Item.create(req.body);
+        res.send(result).json();
+      }
   });
 module.exports = router;
