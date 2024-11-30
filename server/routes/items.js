@@ -26,7 +26,7 @@ router.get('/:id', async (req, res, next) => {
   // POST request to add a new item
   router.post('/', 
     [
-      check['name'].not().isEmpty().trim()
+      check('name').not().isEmpty().trim()
     ],
     async (req, res)=> {
       const errors = validationResult(req);
@@ -38,4 +38,22 @@ router.get('/:id', async (req, res, next) => {
         res.send(result).json();
       }
   });
+
+// PUT method
+router.put('/:id', async(req, res)=>{
+  const result = await Item.update(req.body, {
+    where: {
+      id: req.params.id
+    }
+  }); 
+  res.send(result).json();
+});
+
+
+// Delete Method
+router.delete('/:id', async (req, res)=>{
+  const result = await Item.findByPk(req.params.id);
+  await result.destroy();
+  res.send(result).json();
+});
 module.exports = router;

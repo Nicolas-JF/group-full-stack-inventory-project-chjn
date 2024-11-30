@@ -13,6 +13,7 @@ export const App = () => {
     // States
     const [items, setItems] = useState([]);
 	const [selectedItem, setSelectedItem] = useState({
+        id: 0,
         name: '',
         image: '',
         price: 0,
@@ -29,7 +30,6 @@ export const App = () => {
             const response = await fetch(`${apiURL}/items`);
             const itemsData = await response.json();
             setItems(itemsData);
-			console.log(items)
         } catch (err) {
             console.log("Oh no an error! ", err)
         }
@@ -62,6 +62,7 @@ export const App = () => {
             category: '',
             description: ''
         });
+        fetchItems();
         setShowAll(true);
 	  };
     return (
@@ -73,7 +74,7 @@ export const App = () => {
             <br/>
             <br/>
             {!showAll && (
-                    <ItemDetail item={selectedItem} onBack={handleBack} setShowModal={setShowModal}/>
+                    <ItemDetail item={selectedItem} handleBack={handleBack} setShowModal={setShowModal} fetchItems={fetchItems} setShowAll={setShowAll}/>
             )}
             {showAll && (
                 <>
@@ -82,13 +83,13 @@ export const App = () => {
                 <br/>
                 <br/>
                 <div className='item-list'>
-                    {items.map((item)=>(
-                        <ItemsList item={item} onItemClick={handleItemClick}/>
+                    {items.map((item, index)=>(
+                        <ItemsList key={index} item={item} onItemClick={handleItemClick}/>
                     ))}
                 </div>
                 </>
             )}
-            <FormModal showModal={showModal} setShowModal={setShowModal} selectedItem={selectedItem} isAdding={isAdding} setIsAdding={setIsAdding}/>
+            <FormModal showModal={showModal} setShowModal={setShowModal} selectedItem={selectedItem} isAdding={isAdding} setIsAdding={setIsAdding} fetchItem={fetchItem} fetchItems={fetchItems}/>
         </main>
     );
 }
