@@ -6,21 +6,31 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import apiURL from '../api'
 
 
-export const ItemDetail = ({item,handleBack, setShowModal, setShowAll, fetchItems}) => {
+export const ItemDetail = ({item,setSelectedItem,handleBack, setShowModal, setShowAll, fetchItems}) => {
   const handleEdit = () =>{
     setShowModal(true);
   }
 
   const handleDelete = async (id) =>{
-    const response = await fetch(`${apiURL}/items/${id}`, {
-      method: 'DELETE'
-    });
-    if(!response.ok){
-      throw new Error('Failed to delete item');
+    if(window.confirm('Are you sure you want to delete this item?')){
+      const response = await fetch(`${apiURL}/items/${id}`, {
+        method: 'DELETE'
+      });
+      if(!response.ok){
+        throw new Error('Failed to delete item');
+      }
+      // Refetch items and show all items again, set selectedItem to default values
+      setSelectedItem({
+        id: 0,
+        name: '',
+        image: '',
+        price: 0,
+        category: '',
+        description: ''
+    })
+      fetchItems();
+      setShowAll(true);
     }
-    // Refetch items and show all items again
-    fetchItems();
-    setShowAll(true);
   }
 
   return (

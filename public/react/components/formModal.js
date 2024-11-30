@@ -46,37 +46,45 @@ export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setI
         event.preventDefault();
         // If adding a new entry, submit post then set form elements back to default on submit.
         if(isAdding){
-            const response = await fetch(`${apiURL}/items`,{
-                method: 'POST',
-                headers: myHeaders, 
-                body: JSON.stringify(formElements)
-            });
-            const data = await response.json();
-            // Reset state after POST
-            setFormElements({
-                id: null,
-                name: '',
-                image: '',
-                price: 0,
-                category: '',
-                description: ''
-            });
-            // Refetch List of all items
-            fetchItems();
+            if(window.confirm('Are you sure you want to add this item?')){
+                const response = await fetch(`${apiURL}/items`,{
+                    method: 'POST',
+                    headers: myHeaders, 
+                    body: JSON.stringify(formElements)
+                });
+                const data = await response.json();
+                // Reset state after POST
+                setFormElements({
+                    id: null,
+                    name: '',
+                    image: '',
+                    price: 0,
+                    category: '',
+                    description: ''
+                });
+                // Refetch List of all items
+                fetchItems();
+                // Always close modal at the end
+                setShowModal(false);
+                setIsAdding(false);
+            }
         }
         else{
-            const response = await fetch(`${apiURL}/items/${formElements.id}`, {
-                method: 'PUT',
-                headers: myHeaders,
-                body: JSON.stringify(formElements)
-            });
-            const data = await response.json();
-            // Refetch data with edits
-            fetchItem(formElements.id);
+            if(window.confirm(`Are you sure you want to edit this item?`)){
+                const response = await fetch(`${apiURL}/items/${formElements.id}`, {
+                    method: 'PUT',
+                    headers: myHeaders,
+                    body: JSON.stringify(formElements)
+                });
+                const data = await response.json();
+                // Refetch data with edits
+                fetchItem(formElements.id);
+                // Always close modal at the end
+                setShowModal(false);
+                setIsAdding(false);
+            }
         }
-        // Always close modal at the end
-        setShowModal(false);
-        setIsAdding(false);
+
     }   
 
     return(

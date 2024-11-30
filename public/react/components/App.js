@@ -74,7 +74,7 @@ export const App = () => {
             <br/>
             <br/>
             {!showAll && (
-                    <ItemDetail item={selectedItem} handleBack={handleBack} setShowModal={setShowModal} fetchItems={fetchItems} setShowAll={setShowAll}/>
+                    <ItemDetail item={selectedItem} setSelectedItem={setSelectedItem} handleBack={handleBack} setShowModal={setShowModal} fetchItems={fetchItems} setShowAll={setShowAll}/>
             )}
             {showAll && (
                 <>
