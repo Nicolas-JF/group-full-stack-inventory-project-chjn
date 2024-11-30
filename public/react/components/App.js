@@ -62,6 +62,7 @@ export const App = () => {
             category: '',
             description: ''
         });
+        fetchItems();
         setShowAll(true);
 	  };
     return (
@@ -73,7 +74,7 @@ export const App = () => {
             <br/>
             <br/>
             {!showAll && (
-                    <ItemDetail item={selectedItem} onBack={handleBack} setShowModal={setShowModal}/>
+                    <ItemDetail item={selectedItem} handleBack={handleBack} setShowModal={setShowModal} fetchItems={fetchItems} setShowAll={setShowAll}/>
             )}
             {showAll && (
                 <>
