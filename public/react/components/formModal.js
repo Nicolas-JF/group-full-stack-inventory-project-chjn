@@ -8,11 +8,25 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { InputGroup } from 'react-bootstrap';
 import apiURL from '../api'
 
-export const FormModal = ({ showModal, setShowModal, selectedItem, isAdding, setIsAdding,fetchItem, fetchItems}) =>{
+export const FormModal = ({showModal, setShowModal, selectedItem, isAdding, setIsAdding, fetchItem, fetchItems}) =>{
+
+    // Header variable
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+
+    const [formElements, setFormElements] = useState({
+            id: null,
+            name: '',
+            image: '',
+            price: 0,
+            category: '',
+            description: ''
+    });
 
     useEffect(()=>{
         if(showModal){
-            setFormData({
+            setFormElements({
                 id: selectedItem.id,
                 name: selectedItem.name,
                 image: selectedItem.image,
@@ -27,113 +41,52 @@ export const FormModal = ({ showModal, setShowModal, selectedItem, isAdding, set
         setIsAdding(false);
     }
 
-    // Form data state
-    const [formData, setFormData]= useState({
-        id: null,
-        name: "",
-        image: "",
-        price: 0,
-        category: "",
-        description: ""
-    })
-
-
-
-    // Function to capture form entries and capture them into the formData state
-
-    function handleFormData (event) {
-      event && setFormData({
-        ...formData, 
-        [event.target.name]: event.target.value
-        })
-        console.log(formData)
-    }
-
-    // Function to handle adding an Item
-    async function handleForm (event) {            
-            // Sending the response 
-            event.preventDefault()
-            if(event.target.name == "save") {
-                if(window.confirm('Are you sure you want to add this item?')){
-                    try {
-                        const req = await fetch("http://localhost:3000/api/items",{
-                            method: 'POST',
-                            body: JSON.stringify(formData),
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
-                        });
-                        const res = await req.json();
-            
-                        // Reset State
-                        setFormData({
-                            id: null,
-                            name: "",
-                            image: "",
-                            price: 0,
-                            category: "",
-                            description: ""
-                        })
-            
-                        // If successful refetch our items and close the modal 
-                        await fetchItems()
-                        setShowModal(false)
-                        setIsAdding(false)
-                    }
-                    catch(err){
-                        console.log("Could not add entry")
-                    }
-                }        
+    // Handle Submit to either add or update items list
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        // If adding a new entry, submit post then set form elements back to default on submit.
+        if(isAdding){
+            if(window.confirm('Are you sure you want to add this item?')){
+                const response = await fetch(`${apiURL}/items`,{
+                    method: 'POST',
+                    headers: myHeaders, 
+                    body: JSON.stringify(formElements)
+                });
+                const data = await response.json();
+                // Reset state after POST
+                setFormElements({
+                    id: null,
+                    name: '',
+                    image: '',
+                    price: 0,
+                    category: '',
+                    description: ''
+                });
+                // Refetch List of all items
+                fetchItems();
+                // Always close modal at the end
+                setShowModal(false);
+                setIsAdding(false);
             }
-           else if(event.target.name == "edit") {
-            if(window.confirm('Are you sure you want to edit this item?')){
-                    try {
-                        const req = await fetch(`http://localhost:3000/api/items//${formData.id}`, {
-                            method: 'PUT',
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify(formData)
-                        });
-                        const res = await req.json();
-                        // Refetch data with edits
-            
-            
-                        setFormData({
-                            id: null,
-                            name: "",
-                            image: "",
-                            price: 0,
-                            category: "",
-                            description: ""
-                        })
-            
-                        // If successful refetch our items and close the modal 
-                        await fetchItem(formData.id)
-                        setShowModal(false)
-                        setIsAdding(false)
-                    }
-            
-                    catch (err) {
-                        console.log("Could not create entry")
-                    }
-                }
+        }
+        else{
+            if(window.confirm(`Are you sure you want to edit this item?`)){
+                const response = await fetch(`${apiURL}/items/${formElements.id}`, {
+                    method: 'PUT',
+                    headers: myHeaders,
+                    body: JSON.stringify(formElements)
+                });
+                const data = await response.json();
+                // Refetch data with edits
+                fetchItem(formElements.id);
+                // Always close modal at the end
+                setShowModal(false);
+                setIsAdding(false);
             }
         }
 
-      
-    
+    }   
 
-useEffect(() =>{
-handleFormData()
-fetchItems()
-}, [])
-
-
-
-// Each form element where we are getting information has a name and value reference to a formData property
-// For each input, its value for the name property will match to that of the propety in formData
-// THe value of the targeted element will then be the value of the matching key in formData eah time an event is triggered
     return(
         <>
             <Modal show={showModal}>
@@ -141,51 +94,43 @@ fetchItems()
                     <Modal.Title> {isAdding ? 'Add new item' : 'Edit Item'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={event => handleForm(e, formData)}>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Group className='mb-3 display'>
-                            <img src={formData.image} className='display-image' alt='No Image Found'/>
+                            <img src={formElements.image} className='display-image' alt='No Image Found'/>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formImage">
                             <Form.Label> Image </Form.Label>
-                            <Form.Control name= "image" type='file' onChange={(e)=>setFormElements({...formData, image: URL.createObjectURL(e.target.files[0])})}/>
+                            <Form.Control type='file' onChange={(e)=>setFormElements({...formElements, image: URL.createObjectURL(e.target.files[0])})}/>
                             <Form.Text> Upload an Image </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formName'>
                             <Form.Label> Name </Form.Label>
-                            <Form.Control name ="name" type='text' value={formData.name} onChange={handleFormData}/>
+                            <Form.Control type='text' value={formElements.name} onChange={(e)=>setFormElements({...formElements, name: e.target.value})}/>
                             <Form.Text> Name of item </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formPrice'>
                             <Form.Label> Price </Form.Label>
                             <InputGroup className='mb-3'>
                             <InputGroup.Text>$</InputGroup.Text>
-                                <Form.Control name = "price" type='number' value={formData.price} onChange={handleFormData}/>
+                                <Form.Control type='number' value={formElements.price} onChange={(e)=>setFormElements({...formElements, price : e.target.value})}/>
                             </InputGroup>
                             <Form.Text> Price per unit of item </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formCategory'>
                             <Form.Label> Category </Form.Label>
-                            <Form.Control name = "category" type='text' value={formData.category} onChange={handleFormData}/>
+                            <Form.Control type='text' value={formElements.category} onChange={(e)=>setFormElements({...formElements, category: e.target.value})}/>
                             <Form.Text> Category of item </Form.Text>
                         </Form.Group>
                         <Form.Group className='mb-3' controlId='formDescription'>
                             <Form.Label> Description </Form.Label>
-                            <Form.Control name="description" as='textarea' value={formData.description} onChange={handleFormData}/>
+                            <Form.Control as='textarea' value={formElements.description} onChange={(e)=>setFormElements({...formElements, description: e.target.value})}/>
                             <Form.Text> Item Description </Form.Text>
                         </Form.Group>
                     </Form>                                    
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={handleClose}> <i className="bi bi-x"></i>Close </Button>
-
-                    {/* Conditionally render the buttons and depending on the value conditionally trigger the fetch reosonse in the form handler */}
-                    {isAdding ? 
-                 <Button name = "save" variant='success' onClick={handleForm}> <i className="bi bi-check-lg"></i>Save </Button>
-
-                : 
-                <Button name = "edit" variant='success' onClick={handleForm}> <i className="bi bi-check-lg"></i>Edit </Button>
-
-                }
+                    <Button variant='success' onClick={handleSubmit}> <i className="bi bi-check-lg"></i>Save </Button>
                 </Modal.Footer>
             </Modal>
         </>
