@@ -54,40 +54,40 @@ export const FormModal = ({ showModal, setShowModal, selectedItem, isAdding, set
             // Sending the response 
             event.preventDefault()
             if(event.target.name == "save") {
-                try {
-                    const req = await fetch("http://localhost:3000/api/items",{
-                        method: 'POST',
-                        body: JSON.stringify(formData),
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    });
-                    const res = await req.json();
-        
-                    // Reset State
-                    setFormData({
-                        id: null,
-                        name: "",
-                        image: "",
-                        price: 0,
-                        category: "",
-                        description: ""
-                    })
-        
-                    // If successful refetch our items and close the modal 
-                    await fetchItems()
-                    setShowModal(false)
-                    setIsAdding(false)
-                }
-                catch(err){
-                    console.log("Could not add entry")
-                }
-                 
-        
+                if(window.confirm('Are you sure you want to add this item?')){
+                    try {
+                        const req = await fetch("http://localhost:3000/api/items",{
+                            method: 'POST',
+                            body: JSON.stringify(formData),
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        });
+                        const res = await req.json();
+            
+                        // Reset State
+                        setFormData({
+                            id: null,
+                            name: "",
+                            image: "",
+                            price: 0,
+                            category: "",
+                            description: ""
+                        })
+            
+                        // If successful refetch our items and close the modal 
+                        await fetchItems()
+                        setShowModal(false)
+                        setIsAdding(false)
+                    }
+                    catch(err){
+                        console.log("Could not add entry")
+                    }
+                }        
             }
-
            else if(event.target.name == "edit") {
-            try {
+            if(window.confirm('Are you sure you want to edit this item?')){
+                    try {
                         const req = await fetch(`http://localhost:3000/api/items//${formData.id}`, {
                             method: 'PUT',
                             headers: {
@@ -118,7 +118,7 @@ export const FormModal = ({ showModal, setShowModal, selectedItem, isAdding, set
                         console.log("Could not create entry")
                     }
                 }
-
+            }
         }
 
       
