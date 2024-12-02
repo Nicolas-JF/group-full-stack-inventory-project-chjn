@@ -1,5 +1,3 @@
-// public/react/components/__tests__/ItemDetail.test.js
-
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ItemDetail } from '../itemDetailtemDetail'; // Adjust the import path if needed
 import '@testing-library/jest-dom/extend-expect'; // for jest-dom matchers
