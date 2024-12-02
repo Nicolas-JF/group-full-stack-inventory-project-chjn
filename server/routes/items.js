@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { Item } = require('../models/item');
-const { check, validationResult } = require('express-validator');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -23,30 +22,29 @@ router.get('/:id', async (req, res, next) => {
       next(error);
     }
   });
+
+
   // POST request to add a new item
-  router.post('/', 
-    [
-      check('name').not().isEmpty().trim()
-    ],
-    async (req, res)=> {
-      const errors = validationResult(req);
-      if(!errors.isEmpty()){
-        res.json({error: errors.array()});
-      }
-      else{
-        const result = await Item.create(req.body);
-        res.send(result).json();
-      }
-  });
+  router.post('/', async (req,res) => {
+    try{
+        const item = await Item.create(req.body)
+        res.send(item).json()
+    }
+
+    catch (err) {
+      res.send(err)
+    }
+  })
+
 
 // PUT method
 router.put('/:id', async(req, res)=>{
-  const result = await Item.update(req.body, {
+  const item = await Item.update(req.body, {
     where: {
       id: req.params.id
     }
   }); 
-  res.send(result).json();
+  res.send(item).json();
 });
 
 
